@@ -1,0 +1,55 @@
+CREATE TABLE Tipo
+(
+	id_tipo integer PRIMARY KEY,
+	tipo_colegio varchar(13),
+	descuento integer
+);
+
+CREATE TABLE Examen
+(
+	id_examen integer PRIMARY KEY,
+	fecha_examen date,
+	puntaje_examen integer
+	
+);
+
+CREATE TABLE Colegio
+(
+	id_colegio integer PRIMARY KEY,
+	nombre_colegio varchar(30),
+	tipo_colegio integer,
+	FOREIGN KEY (tipo_colegio) REFERENCES Tipo(id_tipo)
+);
+
+CREATE TABLE Alumno
+(
+	rut varchar(10) PRIMARY KEY,
+	apellidoP varchar(15),
+	apellidoM varchar(15),
+	nombres varchar(20),
+	f_nacimiento date,
+	alumno_colegio integer,
+	tipo_alumno integer,
+	FOREIGN KEY (alumno_colegio) REFERENCES Colegio(id_colegio),
+	FOREIGN KEY (tipo_alumno) REFERENCES Tipo(id_tipo)
+	
+);
+
+CREATE TABLE Puntaje
+(
+	id_alumno_puntaje integer PRIMARY KEY,
+	rut_puntaje varchar(10),
+	puntaje_examen integer,
+	FOREIGN KEY (rut_puntaje) REFERENCES Alumno(rut),
+	FOREIGN KEY (puntaje_examen) REFERENCES Examen(id_examen)
+);
+
+CREATE TABLE Cuotas
+(
+	fecha_pago Date PRIMARY KEY,
+	cant_cuota Integer,
+	cuota_actual Integer,
+	id_estudiante varchar(10),
+	FOREIGN KEY (id_estudiante) REFERENCES Alumno(rut)
+	
+);
